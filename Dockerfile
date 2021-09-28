@@ -5,5 +5,5 @@ COPY w3otp.html .
 RUN npm install &&\
     apk update &&\
     apk upgrade
-EXPOSE  3000
+EXPOSE 3000
 CMD node receive_sms.js
