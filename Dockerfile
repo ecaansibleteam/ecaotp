@@ -1,7 +1,7 @@
 FROM node:9.4.0-alpine
 #COPY receive_sms.js .
-COPY package.json .
-COPY w3otp.html .
+#COPY package.json .
+#COPY w3otp.html .
 RUN npm install &&
     #apk update &&\
     #apk upgrade
