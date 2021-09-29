@@ -3,5 +3,6 @@ COPY receive_sms.js .
 COPY package.json .
 COPY w3otp.html .
 RUN npm install
+RUN chmod -R 755 .
 EXPOSE  3000
 CMD node receive_sms.js
