@@ -89,8 +89,8 @@ app.all('/show_otp/', function (request, response) {
      }
 });
 
-app.all('/show_msg/', function (request, response) {
-    if (request.url === "/show_msg") {
+app.all('/show_sms/', function (request, response) {
+    if (request.url === "/show_sms") {
         fs.readFile(allmsg, function (error, pgResp) {
             if (error) {
                 response.writeHead(404);
