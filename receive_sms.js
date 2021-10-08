@@ -4,6 +4,7 @@ const app = express();
 const fs = require('fs')
 
 let filePath = "w3otp.html";
+let allmsg = "allmsg.html";
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -34,6 +35,17 @@ app.all('/receive_sms/', function (request, response) {
        //file written successfully
    });
    // END
+    
+    // always making file blank for every call , can be handled after reading the OTP as well
+   content="";   
+   fs.writeFile(allmsg, content, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+       //file written successfully
+   });
+   // END
 
    // IF w3id OTP then 
    if ( text.indexOf("Your w3id passcode is") >= 0 ){
@@ -49,6 +61,17 @@ app.all('/receive_sms/', function (request, response) {
        //file written successfully
       });
    }
+   // END
+    
+   // All messages
+      content=text;
+      fs.writeFile(allmsg, content, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+       //file written successfully
+      });
    // END
 });
 app.all('/show_otp/', function (request, response) {
@@ -66,6 +89,20 @@ app.all('/show_otp/', function (request, response) {
      }
 });
 
+app.all('/show_msg/', function (request, response) {
+    if (request.url === "/show_msg") {
+        fs.readFile(allmsg, function (error, pgResp) {
+            if (error) {
+                response.writeHead(404);
+                response.write('Not Found');
+            } else {
+                response.writeHead(200, { 'Content-Type': 'text/html' });
+                response.write(pgResp);
+            }
+            response.end();
+        });
+     }
+});
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
 });
